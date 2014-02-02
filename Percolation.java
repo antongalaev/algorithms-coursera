@@ -4,6 +4,7 @@
  * Date: 02/02/2014
  * Time: 14:50
  */
+
 public class Percolation {
 
     private int size;
@@ -21,28 +22,28 @@ public class Percolation {
     }
 
     public void open(int i, int j) {     // open site (row i, column j) if it is not already
-        if (isOpen(i, j)) return;
+        if (isOpen(i, j)) {
+            return;
+        }
         int index = xyTo1D(i, j);
         data[index] = true;
-        //if not top row
+        // up
         if (i != 1 && isOpen(i - 1, j)) {
             uf.union(xyTo1D(i - 1, j), index);
         } else if (i == 1) {
-            //connect to virtual top index
             uf.union(index, 0);
         }
-        //if not bottom row
+        // down
         if (i != size && isOpen(i + 1, j)) {
             uf.union(xyTo1D(i + 1, j), index);
         } else if (i == size) {
-            //connect to virtual bottom index
             uf.union(index, size * size + 1);
         }
-        //if not left border
+        // left
         if (j != 1 && isOpen(i, j - 1)) {
             uf.union(xyTo1D(i, j - 1), index);
         }
-        //if not right border
+        // right
         if (j != size && isOpen(i, j + 1)) {
             uf.union(xyTo1D(i, j + 1), index);
         }

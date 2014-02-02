@@ -4,12 +4,13 @@
  * Date: 02/02/2014
  * Time: 14:52
  */
+
 public class PercolationStats {
 
     private double[] experiments;
 
     public PercolationStats(int N, int T) {  // perform T independent computational experiments on an N-by-N grid
-        if (N < 1 ||T < 1) {
+        if (N < 1 || T < 1) {
             throw new IllegalArgumentException();
         }
         experiments = new double[T];
@@ -17,10 +18,10 @@ public class PercolationStats {
             Percolation p = new Percolation(N);
             int opened = 0;
             while (!p.percolates()) {
-                int row = StdRandom.uniform(N) + 1;
-                int column = StdRandom.uniform(N) + 1;
-                if (!p.isOpen(row, column)) {
-                    p.open(row, column);
+                int r = StdRandom.uniform(N) + 1;
+                int c = StdRandom.uniform(N) + 1;
+                if (!p.isOpen(r, c)) {
+                    p.open(r, c);
                     ++opened;
                 }
             }
@@ -47,7 +48,7 @@ public class PercolationStats {
         PercolationStats stats = new PercolationStats(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
         StdOut.printf("mean = " + stats.mean());
         StdOut.printf("stddev = " + stats.stddev());
-        StdOut.printf("95 confidence interval = " + stats.confidenceLo() + ", " +stats.confidenceHi());
+        StdOut.printf("95 confidence interval = " + stats.confidenceLo() + ", " + stats.confidenceHi());
     }
 }
 
