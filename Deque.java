@@ -67,6 +67,9 @@ public class Deque<Item> implements Iterable<Item> {
         }
         Item value = first.getValue();
         first = first.getNext();
+        if (first != null) {
+            first.setPrev(null);
+        }
         --size;
         return value;
     }
@@ -78,6 +81,9 @@ public class Deque<Item> implements Iterable<Item> {
         }
         Item value = last.getValue();
         last = last.getPrev();
+        if (last != null) {
+            last.setNext(null);
+        }
         --size;
         return value;
     }
@@ -85,7 +91,7 @@ public class Deque<Item> implements Iterable<Item> {
     // return an iterator over items in order from front to end
     public Iterator<Item> iterator()       {
            return new Iterator<Item>() {
-               Node<Item> current = first;
+               private Node<Item> current = first;
 
                @Override
                public boolean hasNext() {
@@ -94,19 +100,15 @@ public class Deque<Item> implements Iterable<Item> {
 
                @Override
                public Item next() {
-                   if (hasNext()) {
-                       Item value = current.getValue();
-                       current = current.getNext();
-                       return value;
-                   } else {
-                       throw new NoSuchElementException();
-                   }
+                   if (!hasNext()) { throw new NoSuchElementException(); }
+                   Item value = current.getValue();
+                   current = current.getNext();
+                   return value;
                }
 
                @Override
                public void remove() {
                    throw new UnsupportedOperationException();
-
                }
            };
     }
@@ -154,13 +156,13 @@ public class Deque<Item> implements Iterable<Item> {
             deque.addLast(i);
         }
         for (int i = 0; i < 10; ++i) {
-            System.out.println(deque.removeLast());
+            StdOut.println(deque.removeLast());
         }
         for (int i = 0; i < 10; ++i) {
             deque.addFirst(i);
         }
-        for (Integer i : deque) {
-            System.out.println(i);
+        for (int i : deque) {
+            StdOut.println(i);
         }
     }
 }
